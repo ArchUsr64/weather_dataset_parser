@@ -37,11 +37,25 @@ struct WeatherData {
 	pressure: f32,
 	daily_summary: String,
 }
+fn custom_parser(input: &String) -> f32{
+	input.parse::<f32>().unwrap()
+}
 impl WeatherData{
-	pub fn from_raw(data: RawCSVData<String>) -> (){
-		// WeatherData{
-		// 	formatted_data: Time::time_from_string(data.formatted_date),
-		// }
+	pub fn from_raw(data: RawCSVData<String>) -> Self{
+		WeatherData{
+			formatted_data: Time::time_from_string(data.formatted_date),
+			summary: data.summary.clone(),
+			precip_kind: data.precip_kind.clone(),
+			temperature: custom_parser(&data.temperature),
+			apparent_temperature: custom_parser(&data.apparent_temperature),
+			humidity: custom_parser(&data.humidity),
+			wind_speed: custom_parser(&data.wind_speed),
+			wind_bearing: custom_parser(&data.wind_bearing),
+			visibility: custom_parser(&data.visibility),
+			cloud_cover: custom_parser(&data.cloud_cover),
+			pressure: custom_parser(&data.pressure),
+			daily_summary: data.daily_summary,
+		}
 	}
 }
 struct RawCSVData<T> {
